@@ -1,0 +1,88 @@
+/* Variable Declaration for the entire site */
+:root{
+    --default-clr: #333;
+    --primary-clr: #2B2243;
+    --secondary-clr: #20D8F9;
+    --white: #FFF;
+    --offwhite: #CCC;
+
+    --ff: 'Source Sans Pro', sans-serif;
+    --fz: 16px;
+
+    --font-m: calc(var(--fz)*1.5);
+    --font-l: calc(var(--fz)*2);
+    --font-xl: calc(var(--fz)*3);
+
+    --fw-l: 200;
+    --fw-n: 400;
+    --fw-b: 700;
+
+    --br: 0.25rem;
+
+    --ma: 0 auto;
+
+    --spacer: 25px;
+    --lspacer: calc(var(--spacer)*3);
+}
+@media only screen and (max-width: 767px) {
+    :root{
+        --fz: 12px;
+        --spacer: 30px;
+    }
+  }
+
+
+/* Universal Styling  */
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+/* Defining Body background, Color and font */
+body{
+    background-color: var(--secondaryy-color);
+    font-family: var(--ff);
+    color: var(--default-clr);
+}
+/* Heading Styling for the site */
+h1{
+    color: var(--white);
+    font-size: var(--font-xl);
+    font-weight: var(--fw-l);
+}
+h2{
+    font-size: var(--font-l);
+    font-weight: var(--fw-b);
+    margin-bottom: 1rem;
+}
+/* Anchor tag styling */
+a{
+    text-decoration: none;
+}
+p{
+    margin-bottom: 1rem;
+}
+/* listing styling */
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+/* Layout styling */
+#page-full{
+    background-image: url(../images/background-img.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+}
+.weather-frame{
+    background-color: rgba(0,0,0,.5);
+    height: 100vh;
+    width: 100%;
+    padding: 5rem 0;
+}
+.text-container{
+    text-align: center;
+}
+.text-container h1{
+    margin-bottom: 3rem;
+}
