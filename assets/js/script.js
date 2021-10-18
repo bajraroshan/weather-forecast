@@ -2,7 +2,7 @@ const appid = 'e90a3f04c0708fb60b086c7d69875752';
 const appUrlWeather = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const appUrlForecast = 'https://api.openweathermap.org/data/2.5/forecast?q=';
 var weatherFormEl = $('#weather-form');
-var searchbtn = $('seach_weather')
+var searchbtn = $('#seach_weather');
 var cityInputEl = $('#city_value');
 var weatherReport = $('.weather-report');
 var resultContainerEl = $('.result-section');
@@ -10,24 +10,23 @@ var forcastDiv = $('.forecast-section ul');
 var alert = $('.alert');
 var listArray;
 
-
+// Form Submit ( Tap Enter or Click Search Button)
 weatherFormEl.on('submit', function(e){
   e.preventDefault();
   var cityName = cityInputEl.val();
   if(cityName.length == 0){
     alert.html('Please enter a valid City Name. <strong>City</strong> cannot be blank.').fadeTo(2000, 500).fadeOut(500);
   } else {
-    console.log(cityName);
-    console.log("HOw");
     weatherMain(cityName);
     weatherForecast(cityName);
   }
 });
 
+// Function for Weather Report
 function weatherMain(cityName) {
   var apiUrl =  appUrlWeather + cityName + '&mode=json&units=metric&appid=' + appid;
   $.get(apiUrl).then(function(response){
-    console.log(response.response);
+    // console.log(response.response);
       var currTime = new Date(response.dt*1000);
       var weatherIcon = 'https://openweathermap.org/img/wn/' + response.weather[0].icon + '@2x.png';
       
@@ -41,18 +40,17 @@ function weatherMain(cityName) {
       createHistoryButton(response.name);
 
   })
+//   If city is invalid 
   .fail(function(){
         alert.html('Please enter a valid City Name. <strong>' + cityName + '</strong> is not a valid city Name.').fadeTo(2000, 500).fadeOut(500);
   });
   
 }
 
-
-
+// Function for Weather Forecast
 function weatherForecast(cityName) {
     var url = appUrlForecast + cityName + '&mode=json&units=metric&appid=' + appid;
-    console.log(url);
-
+    
     $.get(url).then(function(response){
         var forecastInfo = response.list;
         forcastDiv.empty();
@@ -77,9 +75,9 @@ function weatherForecast(cityName) {
     });
 }
 
+// Function for UV Index
 function uvIndex(coord) {
    var url = 'https://api.openweathermap.org/data/2.5/uvi?lat=' + coord.lat + '&lon=' + coord.lon + '&appid=' + appid;
-  console.log(url);
 
   $.get(url).then(function(response){
       var uvInd = response.value;
@@ -100,13 +98,15 @@ function uvIndex(coord) {
   });
 }
 
+// Localstorage
+// Getting items from localstorage 
 if (localStorage.getItem("localWeatherSearches")) {
     listArray = JSON.parse(localStorage.getItem("localWeatherSearches"));
     writeSearchHistory(listArray);
 } else {
     listArray = [];
 }
-
+// Creating Quick Search button with reference to history
 function createHistoryButton(cityName) {
     var citySearch = cityName.trim();
     var buttonCheck = $('#lastSearch > BUTTON[value=' + citySearch + ']');
@@ -124,7 +124,7 @@ function createHistoryButton(cityName) {
     );
 }
 
-
+// Writing Search History Button
 function writeSearchHistory(array) {
   $.each(array, function(i) {
       createHistoryButton(array[i]);
@@ -134,6 +134,7 @@ function writeSearchHistory(array) {
   });
 }
 
+// adding click function for search history button
 $("#lastSearch").click(function(e) {
     var cityName = e.target.value;
     weatherMain(cityName);
